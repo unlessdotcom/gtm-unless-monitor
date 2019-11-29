@@ -1,6 +1,6 @@
 homepage: "https://unless.com"
 documentation: "https://unless.com/en/integrations/gtm-installer/"
 versions:
-  - sha: 18f21805a1061ebdbb3d80637981cec5d67472f8
+  - sha: ed72627f1c5762aa411c1f032eef08576f3707a4
     changeNotes: Initial release.
     
