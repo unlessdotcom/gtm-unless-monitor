@@ -1,7 +1,7 @@
 homepage: "https://unless.com"
 documentation: "https://unless.com/en/integrations/gtm-monitor/"
 versions:
-  - sha: 15d1b80f2fa16075c8e1f758043d33e459bfea21
-    changeNotes: Initial release.
   - sha: ceb04958845d180a7bca95afe287252df02ca78a
     changeNotes: Fixed minor bugs and added debugging console logs
+  - sha: 15d1b80f2fa16075c8e1f758043d33e459bfea21
+    changeNotes: Initial release.
