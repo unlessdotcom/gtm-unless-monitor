@@ -1,6 +1,8 @@
 homepage: "https://unless.com"
 documentation: "https://unless.com/en/integrations/gtm-monitor/"
 versions:
+  - sha: f6a36c013265f48a3bd962cfa8081cabb3acdef5
+    changeNotes: Added an event-source property to make the event automatically appear in the Unless dashboard.
   - sha: ceb04958845d180a7bca95afe287252df02ca78a
     changeNotes: Fixed minor bugs and added debugging console logs
   - sha: 15d1b80f2fa16075c8e1f758043d33e459bfea21
