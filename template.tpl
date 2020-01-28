@@ -139,7 +139,8 @@ logToConsole('Unless GTM monitor tracking', eventName, eventValue, eventMetadata
 callInWindow('Txt.track', {
   eventName: eventName,
   eventValue: eventValue,
-  eventMetadata: eventMetadata
+  eventMetadata: eventMetadata,
+  eventSource: 'GMT-monitor'
 });
 
 data.gtmOnSuccess();
