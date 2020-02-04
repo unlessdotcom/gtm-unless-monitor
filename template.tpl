@@ -140,7 +140,7 @@ callInWindow('Txt.track', {
   eventName: eventName,
   eventValue: eventValue,
   eventMetadata: eventMetadata,
-  eventSource: 'GMT-monitor'
+  eventSource: 'GTM-monitor'
 });
 
 data.gtmOnSuccess();
