@@ -1,6 +1,8 @@
 homepage: "https://unless.com"
 documentation: "https://unless.com/en/integrations/gtm-monitor/"
 versions:
+  - sha: 8f58bd6ebd08fcb66c4ff5a09ce8eee4bcab7b98
+    changeNotes: You can now overwrite the event name that is used. Added support for other trigger types than custom event.
   - sha: 947a058ba13b41bc1a99dedacb641462b5a3fb59
     changeNotes: Added an event-source property to make the event automatically appear in the Unless dashboard.
   - sha: f6a36c013265f48a3bd962cfa8081cabb3acdef5
