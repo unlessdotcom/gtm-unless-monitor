@@ -91,6 +91,28 @@ ___TEMPLATE_PARAMETERS___
     "simpleValueType": true,
     "name": "email",
     "type": "SELECT"
+  },
+  {
+    "help": "When the trigger is a custom event, we will automatically use the name of the trigger. For any other type of trigger you have to set the event name here. This event name will show up in the GTM dropdown in the Unless dashboard.",
+    "simpleValueType": true,
+    "name": "eventNameQ",
+    "checkboxText": "Would you like to override or set the event name?",
+    "type": "CHECKBOX"
+  },
+  {
+    "type": "TEXT",
+    "name": "eventName",
+    "displayName": "Event name",
+    "simpleValueType": true,
+    "enablingConditions": [
+      {
+        "paramName": "eventNameQ",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ],
+    "help": "Set the name of the event. This event name will show up in the GTM dropdown in the Unless dashboard.",
+    "canBeEmptyString": true
   }
 ]
 
@@ -101,13 +123,13 @@ const query = require('queryPermission');
 const callInWindow = require('callInWindow');
 const copyFromDataLayer = require('copyFromDataLayer');
 const copyFromWindow = require('copyFromWindow');
+const setInWindow = require('setInWindow');
 const logToConsole = require('logToConsole');
 
 logToConsole('GTM monitor starting.');
 
 const dataLayer = copyFromWindow("dataLayer");
-
-const eventName = copyFromDataLayer('event');
+const eventName = data.eventName || copyFromDataLayer('event');
 const email = copyFromDataLayer('email') || data.email;
 const eventValue = copyFromDataLayer('value') || data.eventValue || 0;
 
@@ -117,7 +139,7 @@ const eventMetadata = [];
 for (let property in myEvent) {
   const objectProperty = property.toString();
   const objectValue = (myEvent[property] || '').toString();
-  let newObject = {
+  const newObject = {
     type: 'text',
     source: 'gtm-monitor',
     custom: true
@@ -130,18 +152,21 @@ for (let property in myEvent) {
   }
 }
 
+logToConsole('Unless GTM monitor tracking', eventName, eventValue, eventMetadata);
+
+setInWindow('_unless', []);
+
+callInWindow('_unless.push', {
+  eventName: eventName,
+  eventValue: eventValue,
+  eventMetadata: eventMetadata,
+  eventSource: 'GTM-monitor'  
+});
+
 if (data.identify && email) {
   logToConsole('Unless GTM monitor identifying', email);
   callInWindow('Txt.identify', email);
 }
-
-logToConsole('Unless GTM monitor tracking', eventName, eventValue, eventMetadata);
-callInWindow('Txt.track', {
-  eventName: eventName,
-  eventValue: eventValue,
-  eventMetadata: eventMetadata,
-  eventSource: 'GTM-monitor'
-});
 
 data.gtmOnSuccess();
 
@@ -355,6 +380,84 @@ ___WEB_PERMISSIONS___
                     "boolean": false
                   }
                 ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "_unless.push"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "_unless"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
               }
             ]
           }
@@ -427,3 +530,10 @@ ___WEB_PERMISSIONS___
 ___TESTS___
 
 scenarios: []
+
+
+___NOTES___
+
+Created on 3/10/2020, 4:34:03 PM
+
+
